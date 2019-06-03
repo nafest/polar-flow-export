@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+message Position {
+    double latitudeDegrees = 1;
+    double longitudeDegrees = 2;
+}
+
+message TrackPoint {
+    int64 time = 1;
+    Position position = 2;
+    float altitudeMeters = 3;
+    float distanceMeters = 4;
+    uint32 heartRateBPM = 5;
+    uint32 cadence = 6;
+    bool sensorPresent = 7;
+}
+
+message Track {
+    repeated TrackPoint trackpoint = 1;
+}
+
+message ActivityLap {
+    int64 startTime = 1;
+    enum TriggerMethod {
+        MANUAL = 0;
+        DISTANCE = 1;
+        LOCATION = 2;
+        TIME = 3;
+        HEARTRATE = 4;
+    }
+
+    double totalTimeSeconds = 2;
+    double distanceMeters = 3;
+    double maximumSpeed = 4;
+    uint32 calories = 5;
+    uint32 averageHeartRateBPM = 6;
+    uint32 maximumHeartRateBPM = 7;
+    bool intensityActive = 8;
+    uint32 cadence =  9;
+    TriggerMethod triggerMethod = 10;
+    repeated Track track = 11;
+    string notes = 12;
+}
+
+message QuickWorkout {
+    double totalTimeSeconds = 1;
+    double distanceMeters = 2;
+}
+
+message Training {
+    QuickWorkout quickWorkoutResults = 1;
+    //Plan plan = 2;    
+}
+
+message Activity {
+    int64 id = 1;
+    repeated ActivityLap lap = 2;
+    string notes = 3;
+    Training training = 4;
+    string creator = 5;
+    string sport = 6;
+}
+
+message Activities {
+    repeated Activity activity = 1;
+}
+
+message TrainingCenterDatabase {
+    Activities activities = 1;
+}
