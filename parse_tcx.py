@@ -315,6 +315,8 @@ class Activity:
     def to_pb2(self):
         act = tcx_pb2.Activity()
         act.lap.extend(list(map(lambda l: l.to_pb2(), self.laps)))
+        act.id = int(time.mktime(self.id.timetuple()))
+        act.sport = self.sport
         return act
 
 
